@@ -20,10 +20,22 @@ const getUserById = async (userId) => {
   }
 };
 
+const deleteUser = async (userId) => {
+  try {
+    const result = await pool.query('DELETE FROM users WHERE id = $1', [userId]);
+    return result.rowCount === 1; // Return true if a user was deleted
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    throw error;
+  }
+};
+
+
+
 // Add more functions for creating new users, updating user information, etc.
 
 module.exports = {
   getUsers,
   getUserById,
-  // ... other user-related functions
+  deleteUser
 };
